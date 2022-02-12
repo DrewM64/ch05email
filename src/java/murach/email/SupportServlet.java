@@ -16,7 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  *
  * @author daniel
- */@WebServlet("/support")
+ */
+@WebServlet("/support")
 public class SupportServlet extends HttpServlet {
 
     /**
@@ -30,22 +31,9 @@ public class SupportServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SupportServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SupportServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
-        }
+        String url= "/support.html";
+        getServletContext().getRequestDispatcher(url)
+                .forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
