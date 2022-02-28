@@ -5,11 +5,8 @@
 package murach.email;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
 /**
  *
@@ -28,7 +25,7 @@ public class AboutServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String url= "/about.html";
+        String url= "/about.jsp";
         getServletContext().getRequestDispatcher(url)
                 .forward(request, response);
     }
