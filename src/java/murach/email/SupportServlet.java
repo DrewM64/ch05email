@@ -6,11 +6,16 @@ package murach.email;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import murach.data.TechSupportIO;
+import murach.business.TechSupport;
 
 /**
  *
@@ -30,8 +35,11 @@ public class SupportServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         String url= "/support.html";
-        getServletContext().getRequestDispatcher(url)
+        ServletContext sc = getServletContext();
+            
+        sc.getRequestDispatcher(url)
                 .forward(request, response);
     }
 
@@ -61,7 +69,16 @@ public class SupportServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        String url= "/support.jsp";
+        ServletContext sc = getServletContext();
+        
+        String path = sc.getRealPath("/WEB-INF/support.txt");
+            ArrayList<TechSupport> ts = TechSupportIO.getTechSupport(path);
+            request.setAttribute("techSupport", ts);
+            
+        sc.getRequestDispatcher(url)
+                .forward(request, response);
     }
 
     /**

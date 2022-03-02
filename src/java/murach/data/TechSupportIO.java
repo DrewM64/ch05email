@@ -16,7 +16,7 @@ import murach.business.*;
 public class TechSupportIO {
     
     public static ArrayList<TechSupport> getTechSupport(String filepath) {
-        ArrayList<TechSupport> techs = new ArrayList<TechSupport>();
+        ArrayList<TechSupport> techs = new ArrayList<>();
         try {
             File file = new File(filepath);
             BufferedReader in = new BufferedReader(
@@ -35,6 +35,7 @@ public class TechSupportIO {
                 s.setPhone(phone);
 //                Add new TechSupport object to ArrayList techs
                 techs.add(s);
+//                Repeat for next line until end of file
                 line = in.readLine();
             }
             in.close();

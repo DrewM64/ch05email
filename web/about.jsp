@@ -17,8 +17,12 @@
     <body>
         <header>
             <nav>
-                <a href="about">About</a>
-                <a href="support">Support</a>
+                <form action="about" method="get">
+                    <input type="submit" value="About">
+                </form>
+                <form action="support" method="post">
+                    <input type="submit" value="Support">
+                </form>
             </nav>
         </header>
         <section>

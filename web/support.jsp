@@ -17,8 +17,12 @@
     <body>
         <header>
             <nav>
-                <a href="about">About</a>
-                <a href="support">Support</a>
+                <form action="about" method="get">
+                    <input type="submit" value="About">
+                </form>
+                <form action="support" method="post">
+                    <input type="submit" value="Support">
+                </form>
             </nav>
         </header>
         <section>
@@ -37,7 +41,7 @@
                 </tr>
                 
                 <!--TO-DO: (Step 6) Populate table using servlet and TechSupportIO getTechSupport()-->
-                <tr>
+<!--                <tr>
                     <td>John Smith</td>
                     <td>jsmith@mdc.edu</td>
                     <td>(305)1234-5678</td>
@@ -51,8 +55,15 @@
                     <td>Charles Darwin</td>
                     <td>cdarwin@mdc.edu</td>
                     <td>(305)1234-5680</td>
-                </tr>
+                </tr>-->
                 <!--End TO-DO-->
+                <c:forEach var="tech" items="${techSupport}">
+                    <tr>
+                        <td>${tech.name}</td>
+                        <td>${tech.email}</td>
+                        <td>${tech.phone}</td>
+                    </tr>
+                </c:forEach>
                 
             </table>
         </section>
