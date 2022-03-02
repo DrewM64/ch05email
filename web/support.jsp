@@ -39,24 +39,7 @@
                     <th>Email</th>
                     <th>Phone#</th>
                 </tr>
-                
-                <!--TO-DO: (Step 6) Populate table using servlet and TechSupportIO getTechSupport()-->
-<!--                <tr>
-                    <td>John Smith</td>
-                    <td>jsmith@mdc.edu</td>
-                    <td>(305)1234-5678</td>
-                </tr>
-                <tr>
-                    <td>Maria Tovar</td>
-                    <td>mtovar@mdc.edu</td>
-                    <td>(305)1234-5679</td>
-                </tr>
-                <tr>
-                    <td>Charles Darwin</td>
-                    <td>cdarwin@mdc.edu</td>
-                    <td>(305)1234-5680</td>
-                </tr>-->
-                <!--End TO-DO-->
+               
                 <c:forEach var="tech" items="${techSupport}">
                     <tr>
                         <td>${tech.name}</td>
