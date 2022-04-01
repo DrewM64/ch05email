@@ -1,27 +1,24 @@
 /*
- * Author: Andrew Montgomery
- * 2/11/2022
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package murach.email;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import javax.servlet.ServletContext;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import murach.data.TechSupportIO;
-import murach.business.TechSupport;
-
 /**
  *
  * @author daniel
  */
-@WebServlet("/support")
-public class SupportServlet extends HttpServlet {
+@WebServlet("/admin")
+public class AdminServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,12 +31,19 @@ public class SupportServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String url= "/support.html";
-        ServletContext sc = getServletContext();
-            
-        sc.getRequestDispatcher(url)
-                .forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AdminServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet AdminServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -68,16 +72,7 @@ public class SupportServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String url= "/support.jsp";
-        ServletContext sc = getServletContext();
-        
-        String path = sc.getRealPath("/WEB-INF/support.txt");
-            ArrayList<TechSupport> ts = TechSupportIO.getTechSupport(path);
-            request.setAttribute("techSupport", ts);
-            
-        sc.getRequestDispatcher(url)
-                .forward(request, response);
+        processRequest(request, response);
     }
 
     /**
