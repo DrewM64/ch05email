@@ -20,9 +20,6 @@
                 <form action="about" method="get">
                     <input type="submit" value="About">
                 </form>
-                <form action="support" method="post">
-                    <input type="submit" value="Support">
-                </form>
                 <form action="admin" method="post">
                     <input type="submit" value="View Support(DB)">
                 </form>
@@ -48,7 +45,7 @@
                 Submitting editButton form sends that row's tech info to AdminServlet
                 to route it to edit_tech_support.jsp for editing
                 -->
-                <c:forEach var="tech" items="${techSupport}">
+                <c:forEach var="tech" items="${techSupportList}">
                     <tr>
                         <td>${tech.firstName} </td>
                         <td>${tech.lastName}</td>

@@ -110,6 +110,17 @@ public class TechSupportDB {
             pool.freeConnection(connection);
         }
     }
+    
+    // checks if phone number input is a number
+    public static boolean validPhone(String phone) {
+        try {
+            int thisPhone = Integer.parseInt(phone);
+            return true;
+        } catch (NumberFormatException e) {
+            System.out.println(e);
+            return false;
+        }
+    }
 
     // Returns single TechSupport object from DB with specified email
     public static TechSupport selectTech(String email) {

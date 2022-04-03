@@ -11,6 +11,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Edit Tech Support</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles/main.css">
     </head>
     <body>
         <!--Allows user to edit (UPDATE) existing tech support information. Validation for 
@@ -22,9 +25,8 @@
         <p><i>${message}</i></p>
     <form action="admin" method="post">
         <input type="hidden" name="action" value="edit">        
-        <label>Email to edit:</label><span>${tech.email}</span><br>
-        <input type="email" name="email" value="${tech.email}" 
-               required><br>
+        <label>Editing: ${tech.email}</label><br>
+        <input type="hidden" name="email" value="${tech.email}">
         <label>Set First Name:</label>
         <input type="text" name="firstName" value="${tech.firstName}" 
                required><br>
@@ -32,7 +34,7 @@
         <input type="text" name="lastName" value="${tech.lastName}"  
                required><br>
         <label>Set Phone Number:</label>
-        <input type="text" name="phoneNumber" value="${tech.phoneNumber}"  
+        <input type="text" name="phoneNumber" value="${tech.phone}"  
                required><br>  
         <label>&nbsp;</label>
         <input type="submit" value="Submit">

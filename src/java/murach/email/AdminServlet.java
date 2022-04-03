@@ -50,8 +50,8 @@ public class AdminServlet extends HttpServlet {
             url = "/view_tech_support.jsp";    // the "view" page
             
             //get list of TechSupport objects to populate table
-            ArrayList<TechSupport> techSupport = TechSupportDB.selectTechs();
-            request.setAttribute("techSupport", techSupport);
+            ArrayList<TechSupport> techSupportList = TechSupportDB.selectTechs();
+            request.setAttribute("techSupportList", techSupportList);
         } 
         else if (action.equals("add")) {
             // get parameters from the request
@@ -67,18 +67,24 @@ public class AdminServlet extends HttpServlet {
             String message;
             if (firstName == null || lastName == null || email == null || phoneNumber == null ||
                 firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || phoneNumber.isEmpty() ) {
-                message = "Please fill out all three text boxes.";
+                message = "Please fill out all four text boxes.";
                 url = "/add_tech_support.jsp";
-            } 
+            } else if (TechSupportDB.emailExists(email)){
+                message = "Email address already in use.";
+                url = "/add_tech_support.jsp";
+            } else if (!TechSupportDB.validPhone(phoneNumber)) {
+                message = "Phone number must be a number.";
+                url = "/add_tech_support.jsp";
+            }
             else {
                 message = "";
                 url = "/view_tech_support.jsp";
                 TechSupportDB.insert(tech);
             }
             
-            ArrayList<TechSupport> techSupport = TechSupportDB.selectTechs();
+            ArrayList<TechSupport> techSupportList = TechSupportDB.selectTechs();
             
-            request.setAttribute("techSupport", techSupport);
+            request.setAttribute("techSupportList", techSupportList);
             request.setAttribute("message", message);
         
         } else if(action.equals("editButton")) {
@@ -86,10 +92,7 @@ public class AdminServlet extends HttpServlet {
             
             // get email of single tech from view_tech_support.jsp
             // get parameters from the request
-            String email = request.getParameter("email");
-//            String firstName = request.getParameter("firstName");
-//            String lastName = request.getParameter("lastName");
-//            String phoneNumber = request.getParameter("phoneNumber");
+            String email = request.getParameter("techEmail");
 
             // store data in TechSupport object
             TechSupport tech = TechSupportDB.selectTech(email);
@@ -97,9 +100,41 @@ public class AdminServlet extends HttpServlet {
             request.setAttribute("tech", tech);
             
         } else if(action.equals("edit")) {
-            //recieves data from edit_tech_support.jsp
-            //update the selected tech in database
+            String message;
+            //requests parameters from edit_tech_support.jsp
+            String email = request.getParameter("email");
+            String firstName = request.getParameter("firstName");
+            String lastName = request.getParameter("lastName");
+            String phoneNumber = request.getParameter("phoneNumber");
+            
+            // validate no empty fields and that phoneNumber is number
+            if (firstName == null || lastName == null || phoneNumber == null ||
+                firstName.isEmpty() || lastName.isEmpty() || phoneNumber.isEmpty() ) {
+                message = "Please fill out all three text boxes.";
+                url = "/edit_tech_support.jsp";
+                TechSupport tech = TechSupportDB.selectTech(email);
+                request.setAttribute("tech", tech);
+                
+            } else if (!TechSupportDB.validPhone(phoneNumber)) {
+                message = "Phone number must be a number.";
+                url = "/edit_tech_support.jsp";
+                TechSupport tech = TechSupportDB.selectTech(email);
+                request.setAttribute("tech", tech);
+                
+            } else {
+                //update the selected tech in database
+                message = "";
+                url = "/view_tech_support.jsp";
+                TechSupport updatedTech = new TechSupport(email, firstName, lastName, phoneNumber);
+                TechSupportDB.update(updatedTech);
+                
+            }
+            
             // get new Arraylist and send back to view_tech_support.jsp
+            ArrayList<TechSupport> techSupportList = TechSupportDB.selectTechs();
+            
+            request.setAttribute("techSupportList", techSupportList);
+            request.setAttribute("message", message);
         }
         
         getServletContext()
