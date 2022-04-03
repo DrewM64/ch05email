@@ -5,13 +5,36 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Add Tech Support</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>
+        <!--
+        Allows user to add (INSERT) tech support information. Validation for 
+        required fields and phone number being numbers handled on servlet
+        Sends to AdminServlet with action "add"
+        -->
+        <h1>Add Tech Support</h1>
+        <p><i>${message}</i></p>
+    <form action="admin" method="post">
+        <input type="hidden" name="action" value="add">        
+        <label>Email:</label>
+        <input type="email" name="email" value="${tech.email}" 
+               required><br>
+        <label>First Name:</label>
+        <input type="text" name="firstName" value="${tech.firstName}" 
+               required><br>
+        <label>Last Name:</label>
+        <input type="text" name="lastName" value="${tech.lastName}"  
+               required><br>
+        <label>Phone Number:</label>
+        <input type="text" name="phoneNumber" value="${tech.phoneNumber}"  
+               required><br>  
+        <label>&nbsp;</label>
+        <input type="submit" value="Submit">
+    </form>
+    <c:import url="/includes/footer.jsp" />

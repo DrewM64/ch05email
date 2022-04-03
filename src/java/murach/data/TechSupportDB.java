@@ -6,6 +6,7 @@
 package murach.data;
 
 import java.sql.*;
+import java.util.ArrayList;
 import murach.business.TechSupport;
 
 /**
@@ -21,13 +22,14 @@ public class TechSupportDB {
         PreparedStatement ps = null;
 
         String query
-                = "INSERT INTO TechSupport (Email, FirstName, LastName) "
-                + "VALUES (?, ?, ?)";
+                = "INSERT INTO TechSupport (Email, FirstName, LastName, PhoneNumber) "
+                + "VALUES (?, ?, ?, ?)";
         try {
             ps = connection.prepareStatement(query);
             ps.setString(1, tech.getEmail());
             ps.setString(2, tech.getFirstName());
             ps.setString(3, tech.getLastName());
+            ps.setString(4, tech.getPhone());
             return ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
@@ -45,13 +47,15 @@ public class TechSupportDB {
 
         String query = "UPDATE TechSupport SET "
                 + "FirstName = ?, "
-                + "LastName = ? "
+                + "LastName = ?, "
+                + "PhoneNumber = ? "
                 + "WHERE Email = ?";
         try {
             ps = connection.prepareStatement(query);
             ps.setString(1, tech.getFirstName());
             ps.setString(2, tech.getLastName());
-            ps.setString(3, tech.getEmail());
+            ps.setString(3, tech.getPhone());
+            ps.setString(4, tech.getEmail());
 
             return ps.executeUpdate();
         } catch (SQLException e) {
@@ -107,6 +111,7 @@ public class TechSupportDB {
         }
     }
 
+    // Returns single TechSupport object from DB with specified email
     public static TechSupport selectTech(String email) {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -124,9 +129,41 @@ public class TechSupportDB {
                 tech = new TechSupport();
                 tech.setFirstName(rs.getString("FirstName"));
                 tech.setLastName(rs.getString("LastName"));
+                tech.setPhone(rs.getString("PhoneNumber"));
                 tech.setEmail(rs.getString("Email"));
             }
             return tech;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        } finally {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+    }
+    
+    // Returns ArrayList of TechSupport objects from DB
+    public static ArrayList<TechSupport> selectTechs() {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query = "SELECT * FROM TechSupport";
+        try {
+            ps = connection.prepareStatement(query);
+            rs = ps.executeQuery();
+            ArrayList<TechSupport> techs = new ArrayList<>();
+            while (rs.next()) {
+                TechSupport s = new TechSupport();
+                s.setFirstName(rs.getString("FirstName"));
+                s.setLastName(rs.getString("LastName"));
+                s.setPhone(rs.getString("PhoneNumber"));
+                s.setEmail(rs.getString("Email"));
+                techs.add(s);
+            }
+            return techs;
         } catch (SQLException e) {
             System.out.println(e);
             return null;

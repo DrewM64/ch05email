@@ -30,7 +30,7 @@ public class TechSupportIO {
                 String email = t.nextToken();
                 String phone = t.nextToken();
                 TechSupport s = new TechSupport();
-                s.setName(name);
+                s.setFirstName(name);
                 s.setEmail(email);
                 s.setPhone(phone);
 //                Add new TechSupport object to ArrayList techs
