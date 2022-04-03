@@ -35,7 +35,7 @@
         <input type="text" name="lastName" value="${tech.lastName}"  
                required><br>
         <label>Phone Number:</label>
-        <input type="text" name="phoneNumber" value="${tech.phoneNumber}"  
+        <input type="text" name="phoneNumber" value="${tech.phone}"  
                required><br>  
         <label>&nbsp;</label>
         <input type="submit" value="Submit">
